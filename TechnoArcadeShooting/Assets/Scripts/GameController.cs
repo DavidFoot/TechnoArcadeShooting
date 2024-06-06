@@ -1,38 +1,53 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    [SerializeField] public int m_partyGameTime;
-    [SerializeField] public GameObject m_managerUI;
-    private bool m_active;
+    [SerializeField] public float m_partyGameTime;
+    [SerializeField] public float m_countdownValue;
+    [SerializeField] public GameObject m_countdown;
+    [SerializeField] public GameObject m_timer;
+    public static bool m_gameIsActive;
     private void Awake()
     {
-        m_active = true;
-        StartCoroutine("TestCoroutine");
-        Debug.Log("Start de la coroutine");
-    }
-    IEnumerator TestCoroutine()
-    {
-        yield return new WaitForSeconds(m_partyGameTime);
-        m_active = false;
-        Debug.Log("Coroutine en fonction");
+        m_gameIsActive = false;
     }
     private void Update()
     {
-        if (m_active)
+        m_countdown.SetActive(true);
+        if (m_countdownValue >= 0) 
         {
-            Debug.Log("Jeux en cours");
-            // Afficher le Timer dans la UI
+
+            float seconds = Mathf.FloorToInt(m_countdownValue % 60);
+            if (seconds != 0)
+            {
+                m_countdown.GetComponent<TextMeshProUGUI>().text = seconds.ToString();
+            }
+            else
+            {
+                m_countdown.GetComponent<TextMeshProUGUI>().text = "START";
+            }
+            m_countdownValue -= Time.deltaTime;
         }
         else
         {
-            Debug.Log("Jeux est fini");
-            /* 
-             * Time Scale 0 + Afficher le menu Score + Retourner Scene de Depart avec bouton Ok dans le panel ? 
-             */
-
+            m_countdown.SetActive(false);
+            m_timer.SetActive(true);
+            if(m_partyGameTime >= 0)
+            {
+                float minutes = Mathf.FloorToInt(m_partyGameTime / 60);
+                float seconds = Mathf.FloorToInt(m_partyGameTime % 60);
+                m_timer.GetComponent<TextMeshProUGUI>().text = "Temps Restant: " + string.Format("{0:00}:{1:00}", minutes, seconds);
+                m_partyGameTime -= Time.deltaTime;
+                m_gameIsActive = true;
+                Debug.Log("JEu en cours");
+            }
+            else
+            {
+                Debug.Log("JEu FIni ");
+                m_gameIsActive = false;
+                // Stop Spawner & player interract  + Score + menu etc..
+            }        
         }
     }
 }
