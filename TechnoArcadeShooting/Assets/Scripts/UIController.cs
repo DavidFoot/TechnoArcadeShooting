@@ -1,5 +1,3 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
@@ -9,14 +7,16 @@ public class UiController : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField] private GameObject m_settingsPanel;
     [SerializeField] private AudioMixer m_audioMixer;
-
+    private int m_gameTimer;
     public void Awake()
     {
-       // m_settingsPanel.SetActive(false);
     }
     public void LoadScene()
     {
         SceneManager.LoadScene(1);
+        gameObject.SetActive(false);
+        Time.timeScale = 1f;
+        InputController.gameIsPaused = false;
     }
     public void QuitApplication()
     {
