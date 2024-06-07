@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -14,7 +13,7 @@ public class ObjectSpawner : MonoBehaviour
     [SerializeField] private float m_initPoolQuantity;
     [SerializeField] private float m_spawnDelay;
     [SerializeField] private MonoScript m_scriptTarget;
-    private static Queue<GameObject> m_objectPool = new Queue<GameObject>();
+    private Queue<GameObject> m_objectPool = new Queue<GameObject>();
     private GameObject m_target;
 
     private void Start()
@@ -46,7 +45,7 @@ public class ObjectSpawner : MonoBehaviour
     {
         _object.SetActive(false);
         _object.GetComponent<Rigidbody>().isKinematic = true;
-        m_objectPool.Enqueue(_object);
+
     }
     IEnumerator StartThrowingObjects() 
     {

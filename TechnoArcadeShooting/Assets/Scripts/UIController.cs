@@ -15,14 +15,15 @@ public class UiController : MonoBehaviour
     [SerializeField] GameObject m_countdown;
     [SerializeField] GameObject m_timer;
     [SerializeField] GameObject m_score;
+    [SerializeField] GameObject m_finalScoreMenu;
+    [SerializeField] GameObject m_endGamePanel;
 
     private int m_gameTimer;
     public void Awake() { 
     }
     private void Update()
     {
-
-        m_countdown.SetActive(true);
+        if(m_countdown) m_countdown.SetActive(true);
         if (m_gc.m_countdownValue >= 0)
         {
             if (m_gc.m_currentCountdown != 0)
@@ -47,13 +48,16 @@ public class UiController : MonoBehaviour
             else
             {
                 m_countdown.GetComponent<TextMeshProUGUI>().text = "FINI!";
+                m_endGamePanel.SetActive(m_endGamePanel);
+                //m_finalScoreMenu.GetComponent<TextMeshProUGUI>().text += " " + GameController.m_actualScore;
                 m_countdown.SetActive(true);
+                Time.timeScale = 0f;
             }
         }
     }
-    public void LoadScene()
+    public void LoadScene(int sceneIndex)
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(sceneIndex);
         gameObject.SetActive(false);
         Time.timeScale = 1f;
         InputController.gameIsPaused = false;

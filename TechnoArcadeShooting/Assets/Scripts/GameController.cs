@@ -19,6 +19,7 @@ public class GameController : MonoBehaviour
     private void Awake()
     {
         m_gameIsActive = false;
+        m_actualScore = 0;
         //m_objectSpawner.GetComponent<ObjectSpawner>().StartSpawn();
 
     }
