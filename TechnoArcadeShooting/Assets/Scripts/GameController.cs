@@ -7,6 +7,8 @@ public class GameController : MonoBehaviour
     [SerializeField] public float m_countdownValue;
     [SerializeField] public GameObject m_countdown;
     [SerializeField] public GameObject m_timer;
+    [SerializeField] public GameObject m_score;
+
     public static bool m_gameIsActive;
     private void Awake()
     {
@@ -33,6 +35,7 @@ public class GameController : MonoBehaviour
         {
             m_countdown.SetActive(false);
             m_timer.SetActive(true);
+            m_score.SetActive(true);
             if(m_partyGameTime >= 0)
             {
                 float minutes = Mathf.FloorToInt(m_partyGameTime / 60);
