@@ -12,7 +12,6 @@ public class InputController : MonoBehaviour
     {
         
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -22,6 +21,16 @@ public class InputController : MonoBehaviour
             Time.timeScale = gameIsPaused ? 0f : 1f;
             m_pauseScreen.SetActive(!m_pauseScreen.activeSelf);
         }
-
+        if (GameController.m_gameIsActive) {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, 100))
+                {
+                    hit.collider.gameObject.GetComponent<TargetBase>().GotHit();
+                }
+            }
+        }
     }
 }
